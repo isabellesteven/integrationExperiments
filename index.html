@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jotform Login Test</title>
+  <script src="https://js.jotform.com/JotForm.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 24px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    ul {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Connect Your Jotform Account</h1>
+  <button onclick="loginWithJotform()">Login with Jotform</button>
+
+  <ul id="formList"></ul>
+
+  <script>
+    function loginWithJotform() {
+      JF.login(
+        function success() {
+          JF.getForms(function(response) {
+            const list = document.getElementById("formList");
+            list.innerHTML = ""; // Clear previous results
+            response.forEach(form => {
+              const li = document.createElement("li");
+              li.textContent = form.title;
+              list.appendChild(li);
+            });
+          });
+        },
+        function error() {
+          alert("Could not authorize user.");
+        }
+      );
+    }
+  </script>
+
+</body>
+</html>
